@@ -1,7 +1,9 @@
 import { getOrgMembers, getUserProjects } from "@/actions/getUserDetails";
 import { MembersArray, ProjectsArray } from "@/types";
 import { Project } from "./Project";
-import { Member } from "./Member";
+import { Card, CardContent, CardTitle } from "../ui/card";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface DashboardProps {
   userId: string;
@@ -11,10 +13,7 @@ export const Dashboard = async ({ userId }: DashboardProps) => {
   const response = await getUserProjects(userId);
   const userProjects: ProjectsArray = response.data;
 
-  const organization_id = userProjects[0].organization_id
-  const response2 = await getOrgMembers({ userId, orgId: organization_id })
-  const orgMembers: MembersArray = response2.data;
-
+  const organization_id = userProjects[0].organization_id;
   if (userProjects.length === 0) {
     return <div>No Projects</div>;
   }
@@ -22,18 +21,29 @@ export const Dashboard = async ({ userId }: DashboardProps) => {
   return (
     <div>
       <div>
-        <h1 className="text-3xl">Projects</h1>
-        {userProjects.map((proj) => (
-          <Project key={proj.id} project={proj} />
-        ))}
+        <h1 className="text-4xl font-bold gradient-text pb-2">Projects</h1>
+        <div className="my-2 flex gap-3 flex-wrap">
+          {userProjects.map((proj) => (
+            <Project key={proj.id} project={proj} />
+          ))}
+        </div>
       </div>
       <div>
-        <h1 className="text-3xl">Members</h1>
-        {orgMembers.map((member) => (
-          <Member key={member.user_id} member={member} />
-        ))}
+        <div className="flex gap-4">
+          <Card className="flex w-1/2 flex-row bg-white/10 border-none justify-around py-6 items-center text-white">
+            <Link href={`/dashboard/members?org=${organization_id}`}>
+              <CardTitle className="text-4xl">Checkout Organization Members</CardTitle>
+              <CardContent className="flex justify-center items-center"><button><ArrowRight /></button></CardContent>
+            </Link>
+          </Card>
+          <Card className="flex w-1/2 flex-row bg-white/10 border-none justify-around py-6 items-center text-white">
+            <Link href="/dashboard/logs">
+              <CardTitle className="text-4xl">Checkout your Logs</CardTitle>
+              <CardContent className="flex justify-center items-center"><button><ArrowRight /></button></CardContent>
+            </Link>
+          </Card>
+        </div>
       </div>
     </div>
   );
 };
-

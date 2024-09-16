@@ -17,6 +17,6 @@ export default async function DashboardPage() {
   if (!isUserSupabaseConnected.status) { return (<NotConnected />) }
 
   return (
-    <div className="min-h-screen h-full w-screen flex flex-col justify-center items-center"><Dashboard userId={user.id} /></div>
+    <div className="min-h-screen h-full flex flex-col"><Dashboard userId={user.id} /></div>
   )
 }
