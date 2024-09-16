@@ -9,7 +9,10 @@ export const connectSupabase = async ({ userId, accessToken }: ConnectSupabasePr
   try {
     const connected = await db.user.update({
       where: { id: userId },
-      data: { accessToken }
+      data: {
+        accessToken,
+        Connected: true
+      }
     })
     if (!connected) {
       return {

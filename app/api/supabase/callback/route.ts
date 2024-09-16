@@ -46,7 +46,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'failed to connect, try again' }, { status: 200 })
   }
 
-  return NextResponse.json({
-    supabaseConnected
-  })
+  return NextResponse.redirect("http://localhost:3000/dashboard")
+
 }

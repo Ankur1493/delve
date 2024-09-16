@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   const user = session?.user
 
   if (!user?.id) {
-    redirect("/")
+    redirect("/login")
   }
 
   const isUserSupabaseConnected = await checkUserSupabaseConnection(user.id)
