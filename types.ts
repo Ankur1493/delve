@@ -14,3 +14,13 @@ export interface Project {
 }
 
 export type ProjectsArray = Project[];
+
+export interface Member {
+  user_id: string;
+  user_name: string;
+  email: string;
+  role_name: string;
+  mfa_enabled: string;
+}
+
+export type MembersArray = Member[]

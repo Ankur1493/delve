@@ -5,7 +5,7 @@ export default function Login({
 }: {
   searchParams: { redirect?: string };
 }) {
-  const redirectTo = searchParams?.redirect || "/";
+  const redirectTo = searchParams?.redirect || "/dashboard";
   return (
     <div>
       <LoginForm redirectTo={redirectTo} />

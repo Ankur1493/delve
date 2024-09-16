@@ -1,7 +1,8 @@
+import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { checkUserSupabaseConnection } from "@/data/user"
-import { redirect } from "next/navigation"
 import { NotConnected } from "@/components/dashboard/NotConnected"
+import { Dashboard } from "@/components/dashboard/Dashboard"
 
 export default async function DashboardPage() {
   const session = await auth()
@@ -16,6 +17,6 @@ export default async function DashboardPage() {
   if (!isUserSupabaseConnected.status) { return (<NotConnected />) }
 
   return (
-    <div>Dashboard</div>
+    <div className="min-h-screen h-full w-screen flex flex-col justify-center items-center"><Dashboard userId={user.id} /></div>
   )
 }
