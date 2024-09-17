@@ -4,6 +4,8 @@ import { Member } from "@/components/dashboard/Member";
 import { MembersArray } from "@/types";
 import { redirect } from "next/navigation";
 import { Table, TableHeader, TableHead, TableRow, TableBody } from "@/components/ui/table";
+import { createLog } from "@/data/logs";
+import { LogType } from "@prisma/client";
 
 export default async function MembersPage({
   searchParams,
@@ -18,6 +20,11 @@ export default async function MembersPage({
 
   const response = await getOrgMembers({ userId: user.id, orgId });
   const orgMembers: MembersArray = response.data;
+  const disabledCount = orgMembers.reduce((acc, member) => {
+    if (!member.mfa_enabled) acc += 1;
+    return acc;
+  }, 0);
+  await createLog({ userId: user.id, type: LogType.MFA, status: true, message: `number of MFA disabled members - ${disabledCount}` })
 
   return (
     <div>

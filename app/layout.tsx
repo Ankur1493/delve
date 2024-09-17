@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Delve",
-  description: "A customer using  Delve needs to check whether their Supabase configuration is set up properly for compliance.",
+  description: "A customer using  Delve can check whether their Supabase configuration is set up properly for compliance.",
 };
 
 export default function RootLayout({

@@ -17,4 +17,22 @@ model User {
   Connected     Boolean   @default(false)
   accessToken   String?   @unique
   refreshToken  String?   @unique
+  logs          Logs[]
+}
+
+enum LogType {
+  OTHER
+  MFA
+  RLS
+  PITR
+}
+
+model Logs {
+  id            String @id @default(cuid())
+  status        Boolean @default(false)
+  message       String
+  type          LogType @default(OTHER)
+  userId        String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
 }

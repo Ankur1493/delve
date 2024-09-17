@@ -1,6 +1,8 @@
 "use server"
 import axios from "axios"
 import { db } from "@/lib/db";
+import { createLog } from "@/data/logs";
+import { LogType } from "@prisma/client";
 
 export const getUserProjects = async (userId: string) => {
   try {
@@ -50,6 +52,7 @@ export const getOrgMembers = async ({ userId, orgId }: { userId: string, orgId: 
 
     const accessToken = user?.accessToken
     if (!accessToken) {
+      createLog({ type: LogType.MFA, userId, message: "someone else tried accessing Members" })
       return {
         status: "false",
         message: "no access token found",
@@ -64,19 +67,22 @@ export const getOrgMembers = async ({ userId, orgId }: { userId: string, orgId: 
     });
 
     if (!orgMembers) {
+      createLog({ type: LogType.MFA, userId, message: "error searching users in the organization" })
       return {
         status: "false",
-        message: "User has no projects in supabase",
+        message: "No members found",
         data: []
       }
     }
 
+    createLog({ type: LogType.MFA, status: true, userId, message: "Members accessed successfully" })
     return {
       status: "true",
-      message: "projects found",
+      message: "Members are listed",
       data: orgMembers.data
     }
   } catch (err) {
+    createLog({ type: LogType.MFA, userId, message: "error searching users in the organization" })
     return {
       status: "false",
       message: "Internal error occured",
@@ -92,6 +98,7 @@ export const getPitrDetails = async ({ userId, projectId }: { userId: string, pr
 
     const accessToken = user?.accessToken
     if (!accessToken) {
+      createLog({ type: LogType.PITR, userId, message: "someone else tried accessing PITR" })
       return {
         status: "false",
         message: "no access token found",
@@ -106,6 +113,7 @@ export const getPitrDetails = async ({ userId, projectId }: { userId: string, pr
     });
 
     if (!response) {
+      createLog({ type: LogType.PITR, userId, message: `error in figuring out PITR status for ${projectId}` })
       return {
         status: "false",
         message: "User has no projects in supabase",
@@ -113,13 +121,16 @@ export const getPitrDetails = async ({ userId, projectId }: { userId: string, pr
       }
     }
 
+    createLog({ type: LogType.PITR, userId, status: true, message: `pitr accessed successfully and it is ${response.data.pitr_enabled}` })
     return {
       status: "true",
       message: "projects found",
       data: response.data.pitr_enabled
     }
+
   } catch (err) {
     console.log({ err })
+    createLog({ type: LogType.PITR, userId, message: `error in figuring out PITR status for ${projectId}` })
     return {
       status: "false",
       message: "Internal error occured",
@@ -134,6 +145,7 @@ export const checkRLSTables = async ({ userId, projectId }: { userId: string, pr
 
     const accessToken = user?.accessToken
     if (!accessToken) {
+      createLog({ type: LogType.RLS, userId, message: "someone else tried accessing Row Level Security" })
       return {
         status: "false",
         message: "no access token found",
@@ -156,6 +168,7 @@ export const checkRLSTables = async ({ userId, projectId }: { userId: string, pr
     );
 
     if (!response) {
+      createLog({ type: LogType.RLS, userId, message: "Was not able to access your RLS" })
       return {
         status: "false",
         message: "User has no tables in this project",
@@ -163,6 +176,7 @@ export const checkRLSTables = async ({ userId, projectId }: { userId: string, pr
       }
     }
 
+    createLog({ type: LogType.RLS, userId, status: true, message: `Rls access successfully for ${projectId}` })
     return {
       status: "true",
       message: "projects found",
@@ -171,6 +185,7 @@ export const checkRLSTables = async ({ userId, projectId }: { userId: string, pr
 
   } catch (error) {
     console.error('Error fetching RLS status:', error);
+    createLog({ type: LogType.RLS, userId, message: "Error while accessing RLS" })
     return {
       status: "false",
       message: "User has no tables in this project",
