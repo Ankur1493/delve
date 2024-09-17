@@ -84,3 +84,47 @@ export const getOrgMembers = async ({ userId, orgId }: { userId: string, orgId: 
     }
   }
 }
+
+export const getPitrDetails = async ({ userId, projectId }: { userId: string, projectId: string }) => {
+
+  try {
+    const user = await db.user.findUnique({ where: { id: userId } })
+
+    const accessToken = user?.accessToken
+    if (!accessToken) {
+      return {
+        status: "false",
+        message: "no access token found",
+        data: []
+      }
+    }
+
+    const response = await axios(`https://api.supabase.com/v1/projects/${projectId}/database/backups`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response) {
+      return {
+        status: "false",
+        message: "User has no projects in supabase",
+        data: false
+      }
+    }
+
+    return {
+      status: "true",
+      message: "projects found",
+      data: response.data.pitr_enabled
+    }
+  } catch (err) {
+    console.log({ err })
+    return {
+      status: "false",
+      message: "Internal error occured",
+      data: false
+    }
+  }
+}
+
