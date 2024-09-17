@@ -11,7 +11,7 @@ export const NotConnected = () => {
   };
 
   return (
-    <div className="w-screen flex flex-col gap-6 justify-center items-center mt-[50%] md:mt-[8%]">
+    <div className=" flex flex-col gap-6 justify-center items-center mt-[50%] md:mt-[8%]">
       <h1 className="text-5xl md:text-8xl font-semibold gradient-text w-3/4 text-center">
         Connect your Supabase account here
       </h1>

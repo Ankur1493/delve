@@ -14,7 +14,7 @@ export const FeatureWrapper: React.FC<FeatureWrapperProps> = ({
   return (
     <Link href={buttonHref} className="w-full">
       <Card className="flex flex-row bg-white/10 border-none justify-around py-6 items-center text-white">
-        <CardTitle className="text-4xl">{headerLabel}</CardTitle>
+        <CardTitle className="text-xl md:text-4xl">{headerLabel}</CardTitle>
         <CardContent className="flex justify-center items-center p-0 m-0">
           <button className="flex justify-center items-center p-0 m-0">
             <ArrowRight />

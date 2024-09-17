@@ -27,7 +27,7 @@ export const Dashboard = async ({ userId }: DashboardProps) => {
         </div>
       </div>
       <div className="mt-16">
-        <div className="flex flex-row gap-4 ">
+        <div className="flex flex-row gap-4 flex-wrap md:flex-nowrap">
           <FeatureWrapper
             headerLabel="Checkout Organization Members"
             buttonHref={`/dashboard/members?org=${organization_id}`}
