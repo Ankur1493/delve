@@ -45,7 +45,5 @@ export async function GET(request: Request) {
   if (!supabaseConnected.status) {
     return NextResponse.json({ error: 'failed to connect, try again' }, { status: 200 })
   }
-
-  return NextResponse.redirect("http://localhost:3000/dashboard")
-
+  return NextResponse.redirect("https://delve-kohl.vercel.app/dashboard")
 }
