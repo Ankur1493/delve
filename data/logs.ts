@@ -28,10 +28,13 @@ export const createLog = async ({ userId, message, type, status }: CreateLogArgs
   }
 }
 
-export const getAllLogs = async () => {
+export const getAllLogs = async (userId: string) => {
   try {
 
     const logs = await db.logs.findMany({
+      where: {
+        userId
+      },
       orderBy: {
         createdAt: 'desc'
       }

@@ -1,9 +1,14 @@
 import { getAllLogs } from "@/data/logs";
 import { Logs } from "@/components/dashboard/Logs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function LogsPage() {
-  const response = await getAllLogs();
+  const session = await auth();
+  const userId = session?.user?.id
+  if (!userId) redirect("/login")
+  const response = await getAllLogs(userId);
   const logs = response.data;
 
   if (logs.length === 0) {
