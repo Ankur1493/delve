@@ -9,7 +9,7 @@ export const Navbar = async () => {
     <nav className="md:m-10 md:mx-20 md:rounded-xl bg-white bg-opacity-10 backdrop-blur-xl text-white shadow-2xl">
       <div className="container mx-auto px-4 flex justify-between items-center py-3">
         <div className="flex items-center space-x-2">
-          <Link href="http://localhost:3000/dashboard">
+          <Link href="/dashboard">
             <div className="text-2xl font-bold flex items-center">
               <Image
                 src="https://getdelve.com/static/media/logo.9b11ea213c1d0090f794.png"

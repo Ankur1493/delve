@@ -24,3 +24,10 @@ export interface Member {
 }
 
 export type MembersArray = Member[]
+
+export interface RLS {
+  relname: string;
+  relrowsecurity: boolean;
+}
+
+export type RLSArray = RLS[]

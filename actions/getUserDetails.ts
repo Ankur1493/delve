@@ -128,3 +128,54 @@ export const getPitrDetails = async ({ userId, projectId }: { userId: string, pr
   }
 }
 
+export const checkRLSTables = async ({ userId, projectId }: { userId: string, projectId: string }) => {
+  try {
+    const user = await db.user.findUnique({ where: { id: userId } })
+
+    const accessToken = user?.accessToken
+    if (!accessToken) {
+      return {
+        status: "false",
+        message: "no access token found",
+        data: []
+      }
+    }
+    const response = await axios.post(
+      `https://api.supabase.com/v1/projects/${projectId}/database/query`,
+      {
+        query: `SELECT relname, relrowsecurity FROM pg_class WHERE relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = 'public')
+        AND relname NOT LIKE '%_id_seq' AND relname NOT LIKE '%_pkey';
+`
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if (!response) {
+      return {
+        status: "false",
+        message: "User has no tables in this project",
+        data: []
+      }
+    }
+
+    return {
+      status: "true",
+      message: "projects found",
+      data: response.data
+    }
+
+  } catch (error) {
+    console.error('Error fetching RLS status:', error);
+    return {
+      status: "false",
+      message: "User has no tables in this project",
+      data: []
+    }
+  }
+}
+
