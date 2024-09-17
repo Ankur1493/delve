@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "overflow-y-hidden h-screen bg-background font-sans antialiased bg-gradient-to-tl from-black via-[#1e0801] to-[#2c0c02]",
+          "overflow-y-hidden overflow-x-hidden h-screen bg-background font-sans antialiased bg-gradient-to-tl from-black via-[#1e0801] to-[#2c0c02]",
           inter.className
         )}
       >

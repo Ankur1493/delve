@@ -7,7 +7,7 @@ export default function Home() {
         <h1 className="text-4xl mt-2 md:text-8xl font-bold gradient-text pb-3">
           We help you track
         </h1>
-        <div className="mt-4 w-fit text-xl md:text-5xl rounded-lg backdrop-blur-md bg-[#E45424] text-white font-bold text-center p-4">
+        <div className="mt-4 w-fit text-xl md:text-5xl rounded-lg bg-[#E45424] text-white font-bold text-center p-4">
           Supabase Configuration
         </div>
       </div>
