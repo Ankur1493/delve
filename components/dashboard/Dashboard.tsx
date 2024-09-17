@@ -1,9 +1,7 @@
-import { getOrgMembers, getUserProjects } from "@/actions/getUserDetails";
-import { MembersArray, ProjectsArray } from "@/types";
+import { getUserProjects } from "@/actions/getUserDetails";
+import { ProjectsArray } from "@/types";
 import { Project } from "./Project";
-import { Card, CardContent, CardTitle } from "../ui/card";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { FeatureWrapper } from "@/components/dashboard/FeatureWrapper";
 
 interface DashboardProps {
   userId: string;
@@ -19,7 +17,7 @@ export const Dashboard = async ({ userId }: DashboardProps) => {
   }
 
   return (
-    <div>
+    <div className="mt-6">
       <div>
         <h1 className="text-4xl font-bold gradient-text pb-2">Projects</h1>
         <div className="my-2 flex gap-3 flex-wrap">
@@ -28,20 +26,16 @@ export const Dashboard = async ({ userId }: DashboardProps) => {
           ))}
         </div>
       </div>
-      <div>
-        <div className="flex gap-4">
-          <Card className="flex w-1/2 flex-row bg-white/10 border-none justify-around py-6 items-center text-white">
-            <Link href={`/dashboard/members?org=${organization_id}`}>
-              <CardTitle className="text-4xl">Checkout Organization Members</CardTitle>
-              <CardContent className="flex justify-center items-center"><button><ArrowRight /></button></CardContent>
-            </Link>
-          </Card>
-          <Card className="flex w-1/2 flex-row bg-white/10 border-none justify-around py-6 items-center text-white">
-            <Link href="/dashboard/logs">
-              <CardTitle className="text-4xl">Checkout your Logs</CardTitle>
-              <CardContent className="flex justify-center items-center"><button><ArrowRight /></button></CardContent>
-            </Link>
-          </Card>
+      <div className="mt-16">
+        <div className="flex flex-row gap-4 ">
+          <FeatureWrapper
+            headerLabel="Checkout Organization Members"
+            buttonHref={`/dashboard/members?org=${organization_id}`}
+          />
+          <FeatureWrapper
+            headerLabel="Checkout your Logs"
+            buttonHref="/dashboard/logs"
+          />
         </div>
       </div>
     </div>
