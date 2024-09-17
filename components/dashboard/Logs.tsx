@@ -18,7 +18,7 @@ export const Logs = ({ message, status, type, createdAt }: LogsProps) => {
         status ? "bg-green-600" : "bg-red-600"
       )}
     >
-      <CardContent className="flex items-center justify-between h-full pt-6 ">
+      <CardContent className="flex flex-col md:flex-row items-center justify-between h-full pt-6 ">
         <div>Type: {type}</div>
         <div>Created At: {formattedDate}</div>
         <div className="w-[500px]">Message: {message}</div>
