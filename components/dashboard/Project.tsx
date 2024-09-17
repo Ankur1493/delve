@@ -79,8 +79,8 @@ export const Project = ({ project }: { project: ProjectInterface }) => {
                 <div>
                   <h1 className="text-2xl font-bold pb-2">Row Level Security</h1>
                   <div>
-                    {Tables.length > 0 ? Tables.map(table => (
-                      <div className="flex text-gray-200 gap-2"><p>{table.relname} - </p> {table.relrowsecurity ? <Check size={20} /> : <CircleX color="red" size={20} />}</div>
+                    {Tables.length > 0 ? Tables.map((table, index) => (
+                      <div key={index} className="flex text-gray-200 gap-2"><p>{table.relname} - </p> {table.relrowsecurity ? <Check size={20} /> : <CircleX color="red" size={20} />}</div>
                     ))
                       : (<p>User has not created any tables yet</p>)}
                   </div>
